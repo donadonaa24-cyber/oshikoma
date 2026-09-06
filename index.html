@@ -3,307 +3,81 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>推し駒battle</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>推し駒battle | ホーム</title>
+    <link rel="stylesheet" href="home.css" />
   </head>
   <body>
-    <section id="titleScreen" class="title-screen" aria-label="タイトル画面">
-      <div class="title-copy">
-        <div class="brand-mark title-mark" aria-hidden="true">
-          <svg viewBox="0 0 80 80" role="img">
-            <path d="M40 6 68 20v38L40 74 12 58V20L40 6Z" />
-            <path d="M40 17 56 26v22L40 58 24 48V26l16-9Z" />
-            <path d="M31 33h18v8H31zM36 24h8v26h-8z" />
-          </svg>
-        </div>
-        <p class="eyebrow">将棋風シミュレーションRPG</p>
-        <h1>推し駒battle</h1>
-        <p class="title-lead">推しと仲良くなって、盤上でだいたい全部ひっくり返す。</p>
-        <div class="title-actions">
-          <button id="startGameBtn" class="primary-btn big-btn" type="button">ゲームスタート</button>
-          <button id="showRulesBtn" class="plain-btn big-btn" type="button">ルール確認</button>
-          <button id="showIntroBtn" class="plain-btn big-btn" type="button">推し駒紹介</button>
-        </div>
-      </div>
+    <main class="home-shell" aria-label="推し駒battle ホームページ">
+      <div class="board-backdrop" aria-hidden="true"></div>
 
-      <div class="title-character-grid" aria-label="初期推し駒">
-        <article class="title-character-card">
-          <img src="assets/characters/ren-dog-rook.png" alt="犬の男の子コスプレの飛" />
-          <div><strong>蓮</strong><span>飛 / 犬の男の子</span></div>
-        </article>
-        <article class="title-character-card">
-          <img src="assets/characters/yui-cat-bishop.png" alt="猫の女の子コスプレの角" />
-          <div><strong>結衣</strong><span>角 / 猫の女の子</span></div>
-        </article>
-        <article class="title-character-card">
-          <img src="assets/characters/mio-bird-silver.png" alt="鳥の女の子コスプレの銀" />
-          <div><strong>美桜</strong><span>銀 / 鳥の女の子</span></div>
-        </article>
-        <article class="title-character-card">
-          <img src="assets/characters/honoka-insect-pawn.png" alt="虫の男の子コスプレの歩" />
-          <div><strong>歩太</strong><span>歩 / 虫の男の子</span></div>
-        </article>
-      </div>
-    </section>
-
-    <section id="introScreen" class="intro-screen menu-screen" aria-label="推し駒紹介" hidden>
-      <div class="menu-head">
-        <div>
-          <p class="eyebrow">Oshigoma File</p>
-          <h2>推し駒紹介</h2>
-        </div>
-        <button id="introBackTitleBtn" class="plain-btn" type="button">タイトルへ</button>
-      </div>
-      <div id="introGrid" class="intro-grid"></div>
-    </section>
-
-    <section id="modeScreen" class="mode-screen menu-screen" aria-label="モード選択" hidden>
-      <div class="mode-copy">
-        <p class="eyebrow">Game Start</p>
-        <h2>どの時間を過ごす？</h2>
-        <p>育てて、触れ合って、保存した推し駒で盤上に出る。ここから熱を入れる。</p>
-      </div>
-      <div class="mode-actions">
-        <button id="openTrainingBtn" class="mode-card-btn" type="button">
-          <strong>推し駒を育てる</strong>
-          <span>4人チームを20ターン以上育て、関係性ごと保存。</span>
-        </button>
-        <button id="openBattleBtn" class="mode-card-btn" type="button">
-          <strong>推し駒battle</strong>
-          <span>育てた推し駒でチームを組んで戦う。</span>
-        </button>
-        <button id="openCareBtn" class="mode-card-btn" type="button">
-          <strong>推し駒と戯れる</strong>
-          <span>なでる、ほっぺ、手つなぎで反応を見る。</span>
-        </button>
-        <button id="modeBackTitleBtn" class="mode-card-btn quiet" type="button">
-          <strong>トップ画面へ戻る</strong>
-          <span>タイトルに戻る。</span>
-        </button>
-      </div>
-      <div class="saved-summary">
-        <div class="section-title">
-          <span>保存中のチームと推し駒</span>
-          <small>local保存</small>
-        </div>
-        <div id="modeRosterSummary" class="summary-grid"></div>
-      </div>
-    </section>
-
-    <section id="teamScreen" class="team-screen menu-screen" aria-label="チーム編成" hidden>
-      <div class="menu-head">
-        <div>
-          <p class="eyebrow">Battle Team</p>
-          <h2>出撃するチームプリセットを選ぶ</h2>
-          <p>育成で保存した4人チームの能力、関係性、思い出ログが反映される。</p>
-        </div>
-        <button id="teamBackModeBtn" class="plain-btn" type="button">モード選択へ</button>
-      </div>
-      <div id="teamGrid" class="team-grid"></div>
-      <div class="screen-actions">
-        <button id="startBattleBtn" class="primary-btn big-btn" type="button">このチームでbattle</button>
-      </div>
-    </section>
-
-    <section id="trainingScreen" class="training-screen growth-screen" aria-label="推し駒を育てる" hidden>
-      <div id="trainingSetup" class="training-setup" hidden></div>
-      <div id="trainingPresetOverlay" class="training-modal" hidden></div>
-      <aside class="growth-roster">
-        <div class="section-title">
-          <span>育成チーム</span>
-          <small>選抜4人</small>
-        </div>
-        <div id="trainingGraph" class="training-graph"></div>
-        <div id="trainRoster" class="growth-list"></div>
-        <div id="trainingRelations" class="training-relations"></div>
-      </aside>
-      <main class="training-main">
-        <div class="section-title">
-          <span id="trainingChapter">育成パート</span>
-          <small id="trainingStatus">保存済み</small>
-        </div>
-        <div class="training-scene">
-          <div class="training-character-stage">
-            <img id="trainingArt" class="growth-art" src="" alt="">
-            <div id="trainingStageTeam" class="training-stage-team"></div>
-            <div id="trainingProfile" class="training-profile"></div>
-          </div>
-          <div class="adv-message training-dialogue">
-            <span id="trainingSpeaker" class="adv-speaker">推し駒</span>
-            <p id="trainingLine">育成する推し駒を選んでください。</p>
-            <small id="trainingResult">会話と行動で成長が変わる。</small>
-            <div id="trainingChoices" class="training-choices"></div>
-          </div>
-        </div>
-      </main>
-      <aside class="growth-side">
-        <button id="trainingBackModeBtn" class="plain-btn wide-btn training-mode-btn" type="button">モード選択へ</button>
-        <div id="trainingLogPanel" class="training-log-panel"></div>
-        <div id="trainingStats" class="growth-stats"></div>
-      </aside>
-    </section>
-
-    <section id="careScreen" class="care-screen growth-screen" aria-label="推し駒と戯れる" hidden>
-      <aside class="growth-roster">
-        <div class="section-title">
-          <span>戯れる推し駒</span>
-          <small>保存反映</small>
-        </div>
-        <div id="careRoster" class="growth-list"></div>
-        <button id="careBackModeBtn" class="plain-btn wide-btn" type="button">モード選択へ</button>
-      </aside>
-      <main class="care-main">
-        <div class="section-title">
-          <span id="careTitle">推し駒と戯れる</span>
-          <small>親密度で成功率が変化</small>
-        </div>
-        <div class="care-stage">
-          <img id="careArt" class="care-art" src="" alt="">
-          <button class="touch-zone head-zone" type="button" data-care-action="head">頭をなでる</button>
-          <button class="touch-zone cheek-zone" type="button" data-care-action="cheek">ほっぺを触る</button>
-          <button class="touch-zone hand-zone" type="button" data-care-action="hand">手を握る</button>
-        </div>
-        <div class="care-dialogue">
-          <strong id="careReaction">推し駒を選んでください。</strong>
-          <span id="careResult">触れ合いの結果で親密度や能力が保存されます。</span>
-        </div>
-      </main>
-      <aside class="growth-side">
-        <div id="careStats" class="growth-stats"></div>
-      </aside>
-    </section>
-
-    <section id="rulesScreen" class="rules-screen" aria-label="ルール画面" hidden>
-      <div class="rules-head">
-        <div>
-          <p class="eyebrow">Rule Book</p>
-          <h2>推し駒battleの基本</h2>
-        </div>
-        <button id="closeRulesBtn" class="plain-btn" type="button">タイトルへ</button>
-      </div>
-      <div class="rules-grid">
-        <article>
-          <strong>1. 取るではなくHP制</strong>
-          <p>攻撃でHPを減らし、0になると離脱。防御や感情で受けるダメージが変わる。</p>
-        </article>
-        <article>
-          <strong>2. 移動は駒ごとに違う</strong>
-          <p>飛は直線、角は斜め、銀は周囲、歩は前進寄り。親密度や感情で移動が伸びる。</p>
-        </article>
-        <article>
-          <strong>3. 会話とミニゲームで育成</strong>
-          <p>親密度は0から。会話、ごはん、ミニゲームでHP上限999まで育てられる。</p>
-        </article>
-        <article>
-          <strong>4. おなかと嫉妬に注意</strong>
-          <p>空腹だとごはんイベントへ。会話せずターン終了すると嫉妬が上がりやすい。</p>
-        </article>
-        <article>
-          <strong>5. ショップで建築</strong>
-          <p>建築Pで壁材を買う。壁はHP1、建物は使った壁材の数だけ耐久値が増える。</p>
-        </article>
-        <article>
-          <strong>6. 勝利条件は2つ</strong>
-          <p>敵の王を撃破するか、右上の制圧マスに味方が到達すると勝利。</p>
-        </article>
-      </div>
-      <div class="rules-actions">
-        <button id="rulesStartBtn" class="primary-btn big-btn" type="button">ゲームスタート</button>
-      </div>
-    </section>
-
-    <div id="gameScreen" class="app-shell" hidden>
-      <header class="topbar">
-        <div class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 80 80" role="img">
-            <path d="M40 6 68 20v38L40 74 12 58V20L40 6Z" />
-            <path d="M40 17 56 26v22L40 58 24 48V26l16-9Z" />
-            <path d="M31 33h18v8H31zM36 24h8v26h-8z" />
-          </svg>
-        </div>
-        <div>
-          <p class="eyebrow">将棋風シミュレーションRPG</p>
-          <h1>推し駒battle</h1>
-        </div>
-        <div class="turn-panel">
-          <span id="phaseLabel">味方フェイズ</span>
-          <strong id="turnLabel">Turn 1</strong>
-        </div>
-        <button id="backTitleBtn" class="plain-btn topbar-btn" type="button">タイトル</button>
+      <header class="home-top">
+        <a class="home-logo" href="index.html" aria-label="推し駒battle ホーム">
+          <span class="piece-mark">推</span>
+          <span>推し駒battle</span>
+        </a>
+        <a class="top-link" href="game.html">ゲームへ</a>
       </header>
 
-      <main class="game-layout">
-        <section class="left-rail" aria-label="味方ユニット">
-          <div class="section-title">
-            <span>推し駒</span>
-            <small id="aliveCount">4/4</small>
+      <section class="hero" aria-label="ゲーム紹介">
+        <img class="hero-character hero-ren" src="assets/characters/ren-dog-rook.png" alt="蓮" />
+        <img class="hero-character hero-yui" src="assets/characters/yui-cat-bishop.png" alt="結衣" />
+
+        <div class="hero-copy">
+          <p class="eyebrow">Cute Shogi Team Battle</p>
+          <h1>推し駒battle</h1>
+          <p class="lead">4人の推し駒を育てて、関係性ごと盤上へ。将棋みたいに読み合って、推しの一手で勝ちにいく。</p>
+          <div class="hero-actions">
+            <a class="primary-action" href="game.html">ゲームを始める</a>
+            <a class="secondary-action" href="game.html">ゲーム画面を見る</a>
           </div>
-          <div id="roster" class="roster"></div>
-        </section>
-
-        <section class="battle-stage" aria-label="盤面">
-          <div class="objective-strip">
-            <div>
-              <span class="objective-label">勝利条件</span>
-              <strong>王撃破 または 拠点制圧</strong>
-              <span id="buildPointsLabel" class="build-points">建築P 4</span>
-            </div>
-            <button id="endTurnBtn" class="primary-btn" type="button">
-              <span aria-hidden="true">⏭</span>
-              ターン終了
-            </button>
-            <button id="stageEditorBtn" class="plain-btn compact-btn" type="button">編集</button>
-          </div>
-          <div id="boardActionMenu" class="board-action-menu" hidden></div>
-          <div id="stageEditorPanel" class="stage-editor-panel" hidden></div>
-          <div id="board" class="board" aria-label="バトル盤"></div>
-        </section>
-
-        <aside class="right-rail" aria-label="ユニット詳細">
-          <section class="unit-panel">
-            <div class="section-title">
-              <span>選択中</span>
-              <small id="actionHint">待機中</small>
-            </div>
-            <div id="unitDetail" class="unit-detail empty-state">
-              盤上の味方を選択
-            </div>
-            <div id="actionBar" class="action-bar"></div>
-          </section>
-        </aside>
-
-        <section class="log-panel activity-log" aria-label="ログ">
-          <div class="section-title">
-            <span>ログ</span>
-            <small id="resultLabel">進行中</small>
-          </div>
-          <ol id="battleLog" class="battle-log"></ol>
-        </section>
-      </main>
-
-      <section class="talk-panel adv-panel" aria-label="会話パート">
-        <div class="section-title">
-          <span>会話パート</span>
-          <small>選択肢で親密度・嫉妬・能力が変化</small>
-        </div>
-        <div id="talkBox" class="talk-box">
-          推し駒を選ぶと会話できる
         </div>
       </section>
-    </div>
 
-    <div id="resultModal" class="result-modal" hidden>
-      <div class="result-dialog">
-        <p id="resultKicker">Result</p>
-        <h2 id="resultTitle">勝利</h2>
-        <div id="resultText" class="result-text"></div>
-        <button id="restartBtn" class="primary-btn" type="button">
-          <span aria-hidden="true">↻</span>
-          もう一局
-        </button>
-      </div>
-    </div>
+      <section class="home-tabs" aria-label="紹介メニュー">
+        <div class="tab-strip" role="tablist" aria-label="ホームタブ">
+          <button id="gameTabButton" class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="gameTab" data-home-tab="gameTab">ゲーム紹介</button>
+          <button id="characterTabButton" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="characterTab" data-home-tab="characterTab">キャラ紹介</button>
+          <a class="tab-btn link-tab" href="https://donadonaa24-cyber.github.io/aniani-asobiba/" target="_blank" rel="noopener noreferrer">あにあにの遊び場</a>
+        </div>
 
-    <script src="game.js"></script>
+        <div id="gameTab" class="tab-panel active" role="tabpanel" aria-labelledby="gameTabButton">
+          <article>
+            <span class="mini-piece">育</span>
+            <strong>4人チーム育成</strong>
+            <p>会話、実戦、おでかけで20ターン育てる。</p>
+          </article>
+          <article>
+            <span class="mini-piece">絆</span>
+            <strong>関係性が動く</strong>
+            <p>親密、嫉妬、感情でチームの空気が変わる。</p>
+          </article>
+          <article>
+            <span class="mini-piece">戦</span>
+            <strong>盤上バトル</strong>
+            <p>保存したチームで出撃し、活躍ログを残す。</p>
+          </article>
+        </div>
+
+        <div id="characterTab" class="tab-panel character-panel" role="tabpanel" aria-labelledby="characterTabButton" hidden>
+          <article>
+            <img src="assets/characters/ren-dog-rook.png" alt="蓮" />
+            <div><strong>蓮</strong><p>まっすぐ走る犬の飛車。</p></div>
+          </article>
+          <article>
+            <img src="assets/characters/yui-cat-bishop.png" alt="結衣" />
+            <div><strong>結衣</strong><p>気分屋な猫の角行。</p></div>
+          </article>
+          <article>
+            <img src="assets/characters/misuzu-dolphin-support.png" alt="海鈴" />
+            <div><strong>海鈴</strong><p>空気を整えるイルカ支援役。</p></div>
+          </article>
+          <article>
+            <img src="assets/characters/kouga-shark-striker.png" alt="鮫牙" />
+            <div><strong>鮫牙</strong><p>強敵に噛みつくサメの強襲役。</p></div>
+          </article>
+        </div>
+      </section>
+    </main>
+    <script src="home.js"></script>
   </body>
 </html>
