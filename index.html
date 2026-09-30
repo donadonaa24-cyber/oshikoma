@@ -3,81 +3,175 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>推し駒battle | ホーム</title>
-    <link rel="stylesheet" href="home.css" />
+    <title>推し駒battle｜推しと進む、死んだら終わりの十階勝負</title>
+    <meta name="description" content="推し駒battleは、動物コスプレの推し駒1人を主人公に、ランダム生成の全10階を攻略する盤上ローグライク戦略ゲーム。将棋風の動きで番人を倒し、仲間を救い、十階の黒獅子王を目指す。Windows向けに開発中。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="推し駒battle｜盤上ローグライク戦略ゲーム" />
+    <meta property="og:description" content="推しと進む、死んだら終わりの十階勝負。将棋風の動きで戦う盤上ローグライク。Windows向けに開発中。" />
+    <link rel="canonical" href="https://donadonaa24-cyber.github.io/oshikoma/" />
+    <meta property="og:url" content="https://donadonaa24-cyber.github.io/oshikoma/" />
+    <meta property="og:image" content="https://donadonaa24-cyber.github.io/oshikoma/assets/screen-board.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4 54 14 58 60H6L10 14Z' fill='%23E2A72E' stroke='%2320252B' stroke-width='4'/%3E%3Ctext x='32' y='47' font-size='28' text-anchor='middle' font-family='sans-serif' font-weight='700' fill='%2320252B'%3E推%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="home-shell" aria-label="推し駒battle ホームページ">
-      <div class="board-backdrop" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="推し駒battle トップ">
+        <span class="brand-piece" aria-hidden="true">推</span>
+        <span>推し駒battle</span>
+      </a>
+      <nav aria-label="ページ内">
+        <a href="#features">特徴</a>
+        <a href="#howto">遊び方</a>
+        <a href="#pieces">駒の動き</a>
+        <a href="#download">入手</a>
+      </nav>
+    </header>
 
-      <header class="home-top">
-        <a class="home-logo" href="index.html" aria-label="推し駒battle ホーム">
-          <span class="piece-mark">推</span>
-          <span>推し駒battle</span>
-        </a>
-        <a class="top-link" href="game.html">ゲームへ</a>
-      </header>
-
-      <section class="hero" aria-label="ゲーム紹介">
-        <img class="hero-character hero-ren" src="assets/characters/ren-dog-rook.png" alt="蓮" />
-        <img class="hero-character hero-yui" src="assets/characters/yui-cat-bishop.png" alt="結衣" />
-
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow">Cute Shogi Team Battle</p>
-          <h1>推し駒battle</h1>
-          <p class="lead">4人の推し駒を育てて、関係性ごと盤上へ。将棋みたいに読み合って、推しの一手で勝ちにいく。</p>
+          <p class="eyebrow">盤上ローグライク戦略ゲーム</p>
+          <h1 id="hero-title">推し駒battle</h1>
+          <p class="lead">推しと進む、死んだら終わりの十階勝負。</p>
+          <p class="sub">動物コスプレの推し駒を1人選び、毎回形の変わる6×6の盤面を全10階まで攻略。将棋風の動きで「鍵」の番人を倒し、主人公を出口へ導く。</p>
           <div class="hero-actions">
-            <a class="primary-action" href="game.html">ゲームを始める</a>
-            <a class="secondary-action" href="game.html">ゲーム画面を見る</a>
+            <a class="button primary" href="#download">入手方法を見る</a>
+            <a class="button" href="#howto">遊び方</a>
           </div>
+          <p class="status"><span class="badge">開発中</span> Windows版を準備しています</p>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <img class="art-back" src="assets/yui.jpg" alt="" width="420" height="420" />
+          <img class="art-front" src="assets/ren.jpg" alt="" width="420" height="420" />
         </div>
       </section>
 
-      <section class="home-tabs" aria-label="紹介メニュー">
-        <div class="tab-strip" role="tablist" aria-label="ホームタブ">
-          <button id="gameTabButton" class="tab-btn active" type="button" role="tab" aria-selected="true" aria-controls="gameTab" data-home-tab="gameTab">ゲーム紹介</button>
-          <button id="characterTabButton" class="tab-btn" type="button" role="tab" aria-selected="false" aria-controls="characterTab" data-home-tab="characterTab">キャラ紹介</button>
-          <a class="tab-btn link-tab" href="https://donadonaa24-cyber.github.io/aniani-asobiba/" target="_blank" rel="noopener noreferrer">あにあにの遊び場</a>
-        </div>
+      <section class="shot-wide" aria-label="ゲーム画面">
+        <figure>
+          <img src="assets/screen-board.jpg" alt="盤面の画面。青緑のマスが移動先、右側に行動ボタンと冒険ログ" width="1280" height="720" loading="lazy" />
+          <figcaption>移動できるマスは青緑、攻撃できる敵は赤。駒にマウスを乗せると攻撃範囲が分かる。</figcaption>
+        </figure>
+      </section>
 
-        <div id="gameTab" class="tab-panel active" role="tabpanel" aria-labelledby="gameTabButton">
-          <article>
-            <span class="mini-piece">育</span>
-            <strong>4人チーム育成</strong>
-            <p>会話、実戦、おでかけで20ターン育てる。</p>
+      <section id="features" class="section" aria-labelledby="features-title">
+        <h2 id="features-title">このゲームの特徴</h2>
+        <div class="cards">
+          <article class="card">
+            <span class="piece">駒</span>
+            <h3>推しごとに違う「動き」</h3>
+            <p>縦横に走る飛、斜めに刺す角、跳び越える桂。主人公の駒の動きで、同じ盤面でも攻め方がまるで変わる。</p>
           </article>
-          <article>
-            <span class="mini-piece">絆</span>
-            <strong>関係性が動く</strong>
-            <p>親密、嫉妬、感情でチームの空気が変わる。</p>
+          <article class="card">
+            <span class="piece">命</span>
+            <h3>倒れたら、そこで終わり</h3>
+            <p>主人公が倒れた瞬間に冒険は終了。仲間の離脱も取り返せない。一手の重さを楽しむローグライク。</p>
           </article>
-          <article>
-            <span class="mini-piece">戦</span>
-            <strong>盤上バトル</strong>
-            <p>保存したチームで出撃し、活躍ログを残す。</p>
+          <article class="card">
+            <span class="piece">救</span>
+            <h3>救って、仲間にして、解放する</h3>
+            <p>2・4・7階では囚われた推し駒を1人救出できる。生きて連れ帰れば、次の冒険から主人公に選べる。</p>
+          </article>
+          <article class="card">
+            <span class="piece">盤</span>
+            <h3>毎回変わる10階の盤面</h3>
+            <p>壁、罠、宝箱、回復マスの配置は冒険ごとにランダム。階を越えるたびに祝福を1つ選び、自分だけの一行を組み立てる。</p>
           </article>
         </div>
+      </section>
 
-        <div id="characterTab" class="tab-panel character-panel" role="tabpanel" aria-labelledby="characterTabButton" hidden>
-          <article>
-            <img src="assets/characters/ren-dog-rook.png" alt="蓮" />
-            <div><strong>蓮</strong><p>まっすぐ走る犬の飛車。</p></div>
-          </article>
-          <article>
-            <img src="assets/characters/yui-cat-bishop.png" alt="結衣" />
-            <div><strong>結衣</strong><p>気分屋な猫の角行。</p></div>
-          </article>
-          <article>
-            <img src="assets/characters/misuzu-dolphin-support.png" alt="海鈴" />
-            <div><strong>海鈴</strong><p>空気を整えるイルカ支援役。</p></div>
-          </article>
-          <article>
-            <img src="assets/characters/kouga-shark-striker.png" alt="鮫牙" />
-            <div><strong>鮫牙</strong><p>強敵に噛みつくサメの強襲役。</p></div>
-          </article>
+      <section id="howto" class="section alt" aria-labelledby="howto-title">
+        <h2 id="howto-title">遊び方</h2>
+        <ol class="steps">
+          <li><strong>主人公を選ぶ</strong><span>最初は蓮・結衣・美桜・歩太の4人から。タイトルから3クリックで第1階へ。</span></li>
+          <li><strong>動いて、攻撃する</strong><span>自分の番は「移動 → 攻撃／固有スキル／待機」。赤く光る敵はクリックするだけで攻撃できる。</span></li>
+          <li><strong>「鍵」の番人を倒す</strong><span>番人を倒すと出口の封印が解ける。ほかの敵を全滅させる必要はない。</span></li>
+          <li><strong>主人公を出口へ</strong><span>主人公が金色の出口に着けば階層突破。体力が回復し、祝福を1つ選んで次の階へ。</span></li>
+          <li><strong>十階の王を越える</strong><span>5階には幹部、10階には黒獅子王が待つ。途中で中断しても「続きから」で再開できる。</span></li>
+        </ol>
+        <div class="tips">
+          <figure>
+            <img src="assets/screen-inspect.jpg" alt="敵にマウスを乗せると、能力と攻撃が届く範囲が表示される" width="1280" height="720" loading="lazy" />
+            <figcaption>敵にマウスを乗せると、能力と「次に攻撃が届く範囲」が分かる。</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/screen-blessing.jpg" alt="階層突破後の祝福選択画面" width="1280" height="720" loading="lazy" />
+            <figcaption>階を越えるたびに3つの祝福から1つを選ぶ。</figcaption>
+          </figure>
         </div>
+      </section>
+
+      <section id="pieces" class="section" aria-labelledby="pieces-title">
+        <h2 id="pieces-title">駒の動き</h2>
+        <p class="note">正規の将棋ではなく、将棋風の動きを持つHP制のターンバトルです。</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th scope="col">駒</th><th scope="col">移動</th><th scope="col">攻撃</th><th scope="col">例</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>飛</td><td>縦横にまっすぐ</td><td>縦横の直線</td><td>蓮</td></tr>
+              <tr><td>角</td><td>斜めにまっすぐ</td><td>斜めの直線＋隣接</td><td>結衣</td></tr>
+              <tr><td>銀型</td><td>縦横2マス・斜め1マス</td><td>隣接</td><td>美桜</td></tr>
+              <tr><td>歩</td><td>前へまっすぐ</td><td>隣接</td><td>歩太</td></tr>
+              <tr><td>桂</td><td>前方へ桂馬跳び</td><td>桂馬跳びの位置</td><td>蛙瑠</td></tr>
+              <tr><td>香</td><td>前へ突き進む</td><td>前方の直線</td><td>鮫牙</td></tr>
+              <tr><td>王・援</td><td>周囲8方向</td><td>近距離</td><td>海鈴</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">歩・香・桂は盤の奥まで進むと「成り」、その階の間だけ金の動き（前・斜め前・横・後ろへ1マス）になります。</p>
+      </section>
+
+      <section class="section alt" aria-labelledby="chara-title">
+        <h2 id="chara-title">最初に選べる推し駒</h2>
+        <div class="chara-grid">
+          <article class="chara"><img src="assets/ren.jpg" alt="蓮。犬のコスプレの男の子" width="420" height="420" loading="lazy" /><h3>蓮 <span>飛</span></h3><p>純粋無垢で一直線。縦横に長く走り、防御を無視する一撃を持つ。</p></article>
+          <article class="chara"><img src="assets/yui.jpg" alt="結衣。猫のコスプレの女の子" width="420" height="420" loading="lazy" /><h3>結衣 <span>角</span></h3><p>気分屋で誇り高い。斜めの射線から仲間を守る。</p></article>
+          <article class="chara"><img src="assets/mio.jpg" alt="美桜。鳥のコスプレの女の子" width="420" height="420" loading="lazy" /><h3>美桜 <span>銀</span></h3><p>自由な関西弁。前に立って仲間をかばう守り役。</p></article>
+          <article class="chara"><img src="assets/honoka.jpg" alt="歩太。虫のコスプレの男の子" width="420" height="420" loading="lazy" /><h3>歩太 <span>歩</span></h3><p>気弱で慎重。一歩ずつ進み、仲間を応援で癒やす。</p></article>
+        </div>
+        <p class="more">救出や幹部の撃破で、主人公にできる推し駒は全24人まで増えていく。</p>
+        <div class="roster" aria-label="解放できる推し駒の一部">
+          <img src="assets/kaeru.jpg" alt="蛙瑠" width="220" height="220" loading="lazy" />
+          <img src="assets/misuzu.jpg" alt="海鈴" width="220" height="220" loading="lazy" />
+          <img src="assets/kouga.jpg" alt="鮫牙" width="220" height="220" loading="lazy" />
+          <img src="assets/kumato.jpg" alt="熊斗" width="220" height="220" loading="lazy" />
+          <img src="assets/koharu.jpg" alt="狐春" width="220" height="220" loading="lazy" />
+          <img src="assets/sara.jpg" alt="砂羅" width="220" height="220" loading="lazy" />
+          <img src="assets/shade1.jpg" alt="豹妬レイラ" width="220" height="220" loading="lazy" />
+        </div>
+      </section>
+
+      <section id="download" class="section" aria-labelledby="download-title">
+        <h2 id="download-title">入手・動作環境</h2>
+        <div class="download">
+          <div>
+            <p class="status"><span class="badge">開発中</span> 配布方法と公開日は決まりしだいお知らせします。</p>
+            <!-- 配布先が決まったら href を差し替え、aria-disabled と disabled クラスを外す。 -->
+            <a class="button primary disabled" href="#download" aria-disabled="true">Windows版ダウンロード（準備中）</a>
+          </div>
+          <dl class="spec">
+            <div><dt>対応</dt><dd>Windows 64bit（動作確認中）</dd></div>
+            <div><dt>操作</dt><dd>マウス</dd></div>
+            <div><dt>1回の冒険</dt><dd>約30分を目安に調整中</dd></div>
+            <div><dt>価格</dt><dd>未定</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="section alt" aria-labelledby="news-title">
+        <h2 id="news-title">更新情報</h2>
+        <ul class="news">
+          <li><time datetime="2026-10-01">2026.10.01</time>開発版：敵の攻撃範囲表示、成り、敵の固有スキル、結果画面などを追加し、難易度を調整。</li>
+        </ul>
       </section>
     </main>
-    <script src="home.js"></script>
+
+    <footer class="footer">
+      <p><a href="https://donadonaa24-cyber.github.io/aniani-asobiba/" rel="noopener">あにあにの遊び場</a></p>
+      <p>© Aniani　本作品の画像・文章・ゲームデータの無断転載・無断配布を禁止します。</p>
+    </footer>
   </body>
 </html>
