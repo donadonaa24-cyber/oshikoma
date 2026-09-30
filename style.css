@@ -309,3 +309,9 @@ td:first-child { font-weight: 700; white-space: nowrap; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+.install { margin: 16px 0 12px; padding-left: 1.4em; }
+
+.install li { margin-bottom: 6px; }
+
+.install small { color: var(--ink-soft); }
