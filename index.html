@@ -12,170 +12,642 @@
     <meta property="og:url" content="https://donadonaa24-cyber.github.io/oshikoma/" />
     <meta property="og:image" content="https://donadonaa24-cyber.github.io/oshikoma/assets/screen-board.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#20252b" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4 54 14 58 60H6L10 14Z' fill='%23E2A72E' stroke='%2320252B' stroke-width='4'/%3E%3Ctext x='32' y='47' font-size='28' text-anchor='middle' font-family='sans-serif' font-weight='700' fill='%2320252B'%3E推%3C/text%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+1p:wght@500;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css?v=20261001d" />
+    <script src="script.js?v=20261001d" defer></script>
   </head>
   <body>
+    <a class="skip" href="#main">本文へスキップ</a>
+
+    <!-- 速報テロップ：ページの一番上でずっと流れる -->
+    <div class="ticker" aria-label="ひとことで言うと">
+      <div class="ticker-track">
+        <span>無料試験版 配信中</span><span>全10階</span><span>盤面6×6</span><span>主人公が倒れたら即終了</span><span>推し駒24人</span><span>固有スキル24種</span><span>祝福7種</span><span>2・4・7階で仲間を救出</span><span>5階に幹部</span><span>10階に黒獅子王</span><span>1冒険 約30分（調整中）</span><span>Windows 10・11</span>
+        <span aria-hidden="true">無料試験版 配信中</span><span aria-hidden="true">全10階</span><span aria-hidden="true">盤面6×6</span><span aria-hidden="true">主人公が倒れたら即終了</span><span aria-hidden="true">推し駒24人</span><span aria-hidden="true">固有スキル24種</span><span aria-hidden="true">祝福7種</span><span aria-hidden="true">2・4・7階で仲間を救出</span><span aria-hidden="true">5階に幹部</span><span aria-hidden="true">10階に黒獅子王</span><span aria-hidden="true">1冒険 約30分（調整中）</span><span aria-hidden="true">Windows 10・11</span>
+      </div>
+    </div>
+
     <header class="topbar">
       <a class="brand" href="#top" aria-label="推し駒battle トップ">
         <span class="brand-piece" aria-hidden="true">推</span>
-        <span>推し駒battle</span>
+        <span class="brand-name">推し駒battle</span>
       </a>
-      <nav aria-label="ページ内">
-        <a href="#features">特徴</a>
-        <a href="#howto">遊び方</a>
-        <a href="#pieces">駒の動き</a>
-        <a href="#download">入手</a>
+      <nav class="topnav" aria-label="ページ内">
+        <a href="#rush">3秒でわかる</a>
+        <a href="#numbers">数字</a>
+        <a href="#rules">掟</a>
+        <a href="#oshi">推し駒図鑑</a>
+        <a href="#moves">駒の動き</a>
+        <a href="#blessings">祝福</a>
+        <a href="#faq">Q&amp;A</a>
         <a class="nav-portal" href="https://donadonaa24-cyber.github.io/aniani-asobiba/">あにあにの遊び場</a>
       </nav>
+      <a class="topbar-cta" href="#download">無料DL</a>
     </header>
 
-    <main id="top">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <p class="eyebrow">盤上ローグライク戦略ゲーム</p>
-          <h1 id="hero-title">推し駒battle</h1>
-          <p class="lead">推しと進む、死んだら終わりの十階勝負。</p>
-          <p class="sub">動物コスプレの推し駒を1人選び、毎回形の変わる6×6の盤面を全10階まで攻略。将棋風の動きで「鍵」の番人を倒し、主人公を出口へ導く。</p>
-          <div class="hero-actions">
-            <a class="button primary" href="#download">無料で遊ぶ（試験版）</a>
-            <a class="button" href="#howto">遊び方</a>
+    <!-- スクロール位置をゲームの階数で表示する -->
+    <div class="floor-meter" aria-hidden="true">
+      <span class="floor-meter-label">現在</span>
+      <strong><span data-floor>1</span><small>/10階</small></strong>
+      <span class="floor-meter-bar"><span data-floor-bar></span></span>
+    </div>
+
+    <main id="main">
+      <!-- ① 結論から -->
+      <section class="hero" id="top">
+        <div class="hero-board" aria-hidden="true"></div>
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <ul class="chips">
+              <li class="chip chip-gold">無料試験版</li>
+              <li class="chip">盤上ローグライク</li>
+              <li class="chip">将棋風の動き</li>
+              <li class="chip chip-red">一発勝負</li>
+            </ul>
+            <p class="hero-kicker">推し駒battle ／ v1.0-trial.1</p>
+            <h1 class="hero-title">
+              <span class="ht-line">推しが倒れたら、</span>
+              <span class="ht-line ht-big"><mark>即終了。</mark></span>
+            </h1>
+            <p class="hero-lead">動物コスプレの<b>推し駒1人</b>を主人公に、毎回形が変わる<b>6×6の盤面</b>を<b>全10階</b>。将棋風の動きで「鍵」の番人を倒し、主人公を出口へ。</p>
+            <div class="hero-cta">
+              <a class="btn btn-main" href="#download"><span class="btn-sub">Windows 10・11 ／ 約101MB</span>無料でダウンロード</a>
+              <a class="btn btn-ghost" href="#rush">3秒で遊び方</a>
+            </div>
+            <ul class="stat-row" aria-label="基本データ">
+              <li><b>10</b><span>階</span></li>
+              <li><b>6×6</b><span>盤面</span></li>
+              <li><b>24</b><span>推し駒</span></li>
+              <li><b>7</b><span>祝福</span></li>
+              <li><b>0</b><span>円</span></li>
+            </ul>
           </div>
-          <p class="status"><span class="badge">試験版</span> Windows版を無料で配布中</p>
-        </div>
-        <div class="hero-art" aria-hidden="true">
-          <img class="art-back" src="assets/yui.jpg" alt="" width="420" height="420" />
-          <img class="art-front" src="assets/ren.jpg" alt="" width="420" height="420" />
-        </div>
-      </section>
 
-      <section class="shot-wide" aria-label="ゲーム画面">
-        <figure>
-          <img src="assets/screen-board.jpg" alt="盤面の画面。青緑のマスが移動先、右側に行動ボタンと冒険ログ" width="1280" height="720" loading="lazy" />
-          <figcaption>移動できるマスは青緑、攻撃できる敵は赤。駒にマウスを乗せると攻撃範囲が分かる。</figcaption>
-        </figure>
-      </section>
-
-      <section id="features" class="section" aria-labelledby="features-title">
-        <h2 id="features-title">このゲームの特徴</h2>
-        <div class="cards">
-          <article class="card">
-            <span class="piece">駒</span>
-            <h3>推しごとに違う「動き」</h3>
-            <p>縦横に走る飛、斜めに刺す角、跳び越える桂。主人公の駒の動きで、同じ盤面でも攻め方がまるで変わる。</p>
-          </article>
-          <article class="card">
-            <span class="piece">命</span>
-            <h3>倒れたら、そこで終わり</h3>
-            <p>主人公が倒れた瞬間に冒険は終了。仲間の離脱も取り返せない。一手の重さを楽しむローグライク。</p>
-          </article>
-          <article class="card">
-            <span class="piece">救</span>
-            <h3>救って、仲間にして、解放する</h3>
-            <p>2・4・7階では囚われた推し駒を1人救出できる。生きて連れ帰れば、次の冒険から主人公に選べる。</p>
-          </article>
-          <article class="card">
-            <span class="piece">盤</span>
-            <h3>毎回変わる10階の盤面</h3>
-            <p>壁、罠、宝箱、回復マスの配置は冒険ごとにランダム。階を越えるたびに祝福を1つ選び、自分だけの一行を組み立てる。</p>
-          </article>
+          <div class="hero-visual">
+            <div class="tv">
+              <div class="tv-top">
+                <span class="tv-live">PLAY</span>
+                <span class="tv-floor">第1 / 10階　目標：「鍵」の番人を倒す</span>
+              </div>
+              <div class="tv-screen">
+                <img src="assets/screen-board.jpg" alt="盤面の画面。青緑のマスが移動先、右側に行動ボタンと冒険ログ" width="1280" height="720" />
+                <p class="telop" data-telop aria-live="off">
+                  <span class="telop-item is-on"><b class="t-teal">青緑</b>のマスへ移動</span>
+                  <span class="telop-item"><b class="t-red">赤い敵</b>はクリックで攻撃</span>
+                  <span class="telop-item">番人<b class="t-gold">「鍵」</b>を倒すと出口が開く</span>
+                  <span class="telop-item">主人公が<b class="t-gold">出口</b>に着けば突破</span>
+                </p>
+              </div>
+            </div>
+            <figure class="sticker sticker-ren"><img src="assets/chars/ren.jpg" alt="" width="360" height="360" /><figcaption><b>飛</b>蓮</figcaption></figure>
+            <figure class="sticker sticker-yui"><img src="assets/chars/yui.jpg" alt="" width="360" height="360" /><figcaption><b>角</b>結衣</figcaption></figure>
+            <p class="burst burst-a">将棋<br />風</p>
+            <p class="burst burst-b">HP<br />制</p>
+          </div>
         </div>
       </section>
 
-      <section id="howto" class="section alt" aria-labelledby="howto-title">
-        <h2 id="howto-title">遊び方</h2>
-        <ol class="steps">
-          <li><strong>主人公を選ぶ</strong><span>最初は蓮・結衣・美桜・歩太の4人から。タイトルから3クリックで第1階へ。</span></li>
-          <li><strong>動いて、攻撃する</strong><span>自分の番は「移動 → 攻撃／固有スキル／待機」。赤く光る敵はクリックするだけで攻撃できる。</span></li>
-          <li><strong>「鍵」の番人を倒す</strong><span>番人を倒すと出口の封印が解ける。ほかの敵を全滅させる必要はない。</span></li>
-          <li><strong>主人公を出口へ</strong><span>主人公が金色の出口に着けば階層突破。体力が回復し、祝福を1つ選んで次の階へ。</span></li>
-          <li><strong>十階の王を越える</strong><span>5階には幹部、10階には黒獅子王が待つ。途中で中断しても「続きから」で再開できる。</span></li>
+      <!-- ② 3秒でわかる -->
+      <section class="sec sec-rush" id="rush">
+        <header class="sec-head">
+          <p class="sec-no">01</p>
+          <h2>3秒でわかる推し駒battle</h2>
+          <p class="sec-tag">これを10回。</p>
+        </header>
+        <ol class="rush">
+          <li class="rush-step">
+            <span class="rush-num">1</span>
+            <h3>推しを1人選ぶ</h3>
+            <p>最初は蓮・結衣・美桜・歩太の4人。タイトルから<b>3クリック</b>で第1階。</p>
+          </li>
+          <li class="rush-step">
+            <span class="rush-num">2</span>
+            <h3>「鍵」の番人を倒す</h3>
+            <p>番人を倒すと出口の封印が解ける。<b>敵の全滅は不要</b>。</p>
+          </li>
+          <li class="rush-step">
+            <span class="rush-num">3</span>
+            <h3>主人公を出口へ</h3>
+            <p>金色の出口に着けば突破。祝福を<b>3つから1つ</b>選んで次の階へ。</p>
+          </li>
         </ol>
-        <div class="tips">
-          <figure>
-            <img src="assets/screen-inspect.jpg" alt="敵にマウスを乗せると、能力と攻撃が届く範囲が表示される" width="1280" height="720" loading="lazy" />
-            <figcaption>敵にマウスを乗せると、能力と「次に攻撃が届く範囲」が分かる。</figcaption>
-          </figure>
-          <figure>
-            <img src="assets/screen-blessing.jpg" alt="階層突破後の祝福選択画面" width="1280" height="720" loading="lazy" />
-            <figcaption>階を越えるたびに3つの祝福から1つを選ぶ。</figcaption>
-          </figure>
+        <p class="rush-goal"><span>5階</span>幹部<span class="rush-arrow" aria-hidden="true">→</span><span>10階</span>黒獅子王</p>
+      </section>
+
+      <!-- ③ 数字で見る -->
+      <section class="sec sec-numbers" id="numbers">
+        <header class="sec-head">
+          <p class="sec-no">02</p>
+          <h2>数字で見る</h2>
+          <p class="sec-tag">ぜんぶゲームのデータから。</p>
+        </header>
+        <ul class="bento">
+          <li class="tile tile-xl tile-ink"><b data-count="10">10</b><span>階</span><small>ランダム生成。冒険ごとに壁・罠・宝箱・回復マスの配置が変わる</small></li>
+          <li class="tile tile-gold"><b>6×6</b><small>盤面は36マス</small></li>
+          <li class="tile tile-teal"><b data-count="24">24</b><span>人</span><small>主人公にできる推し駒</small></li>
+          <li class="tile"><b data-count="24">24</b><span>種</span><small>固有スキル（1人1つ）</small></li>
+          <li class="tile tile-red tile-wide"><b data-count="1">1</b><span>回</span><small>主人公が倒れたら、その瞬間に冒険終了</small></li>
+          <li class="tile"><b data-count="7">7</b><span>種</span><small>階を越えるたびに選ぶ祝福</small></li>
+          <li class="tile tile-teal"><b data-count="3">3</b><span>回</span><small>救出チャンス（2・4・7階）</small></li>
+          <li class="tile"><b data-count="4">4</b><span>人</span><small>最大パーティ</small></li>
+          <li class="tile tile-gold"><b data-count="60">60</b><span>%</span><small>階層突破で生存者が最大HPの60%回復</small></li>
+          <li class="tile"><b data-count="6">6</b><span>手</span><small>先まで手番の順番が見える</small></li>
+          <li class="tile tile-ink tile-wide"><b>×4</b><small>敵ターンの早送り（×1／×2／×4）</small></li>
+          <li class="tile tile-gold tile-wide"><b data-count="8">8</b><span>タイプ</span><small>駒の動き（歩・飛・角・桂・香・王・銀・援）＋成り</small></li>
+          <li class="tile tile-wide"><b data-count="30">30</b><span>分</span><small>1回の冒険の目安（調整中）</small></li>
+        </ul>
+      </section>
+
+      <!-- ④ 掟 -->
+      <section class="sec sec-rules" id="rules">
+        <header class="sec-head">
+          <p class="sec-no">03</p>
+          <h2>知っておくべき掟</h2>
+          <p class="sec-tag">やばい ／ うれしい</p>
+        </header>
+        <div class="rules">
+          <div class="rules-col rules-bad">
+            <h3><span>やばい</span>取り返しがつかない</h3>
+            <ul>
+              <li><b>主人公が倒れる</b>と、その瞬間に冒険終了</li>
+              <li><b>仲間が倒れる</b>と、その冒険の間は永久に離脱（蘇生なし）</li>
+              <li>罠・回復・宝箱・救出のマスを踏んだ移動は<b>「移動を戻す」ができない</b></li>
+              <li>6階からは通常の敵も<b>固有スキル</b>を使ってくる</li>
+            </ul>
+          </div>
+          <div class="rules-col rules-good">
+            <h3><span>うれしい</span>ちゃんと助けもある</h3>
+            <ul>
+              <li>階を突破すると、生存者が<b>最大HPの60%回復</b></li>
+              <li>駒にマウスを乗せると、<b>能力と攻撃が届く範囲</b>が見える。「危険範囲」で全敵の範囲を常時表示</li>
+              <li>歩・香・桂は盤の奥で<b>「成り」</b>、その階の間だけ金の動きに</li>
+              <li>途中で<b>「中断」</b>して、次回「続きから」再開できる（自動保存）</li>
+            </ul>
+          </div>
         </div>
       </section>
 
-      <section id="pieces" class="section" aria-labelledby="pieces-title">
-        <h2 id="pieces-title">駒の動き</h2>
-        <p class="note">正規の将棋ではなく、将棋風の動きを持つHP制のターンバトルです。</p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr><th scope="col">駒</th><th scope="col">移動</th><th scope="col">攻撃</th><th scope="col">例</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>飛</td><td>縦横にまっすぐ</td><td>縦横の直線</td><td>蓮</td></tr>
-              <tr><td>角</td><td>斜めにまっすぐ</td><td>斜めの直線＋隣接</td><td>結衣</td></tr>
-              <tr><td>銀型</td><td>縦横2マス・斜め1マス</td><td>隣接</td><td>美桜</td></tr>
-              <tr><td>歩</td><td>前へまっすぐ</td><td>隣接</td><td>歩太</td></tr>
-              <tr><td>桂</td><td>前方へ桂馬跳び</td><td>桂馬跳びの位置</td><td>蛙瑠</td></tr>
-              <tr><td>香</td><td>前へ突き進む</td><td>前方の直線</td><td>鮫牙</td></tr>
-              <tr><td>王・援</td><td>周囲8方向</td><td>近距離</td><td>海鈴</td></tr>
-            </tbody>
-          </table>
+      <!-- ⑤ 推し駒図鑑 -->
+      <section class="sec sec-oshi" id="oshi">
+        <header class="sec-head">
+          <p class="sec-no">04</p>
+          <h2>推し駒図鑑 <span class="count-badge">全24人</span></h2>
+          <p class="sec-tag">乗せる・タップで表情が変わる。</p>
+        </header>
+        <div class="filters" role="group" aria-label="図鑑の絞り込み">
+          <button type="button" class="filter is-on" data-filter="all" aria-pressed="true">すべて<span>24</span></button>
+          <button type="button" class="filter" data-filter="starter" aria-pressed="false">最初から<span>4</span></button>
+          <button type="button" class="filter" data-filter="rescue" aria-pressed="false">救出で解放<span>16</span></button>
+          <button type="button" class="filter" data-filter="boss" aria-pressed="false">撃破で解放<span>4</span></button>
         </div>
-        <p class="note">歩・香・桂は盤の奥まで進むと「成り」、その階の間だけ金の動き（前・斜め前・横・後ろへ1マス）になります。</p>
+        <p class="oshi-note">数値は基礎値。主人公になったときの補正や祝福、成りで冒険中に変わります。救出した推し駒は<b>生きて連れ帰る</b>と、幹部と黒獅子王は<b>初めて倒す</b>と、次の冒険から主人公に選べます。</p>
+        <ul class="oshi-grid">
+<!--OSHI_CARDS:start-->
+          <li class="oshi-card oshi-starter" data-group="starter" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/ren.jpg" alt="蓮。犬の男の子" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/ren-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 飛">飛</span>
+            <span class="unlock">最初から</span>
+            <h3>蓮</h3>
+            <p class="costume">犬の男の子／飛型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.500"></span><b>36</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.615"></span><b>8</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.286"></span><b>2</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.778"></span><b>7</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>3</b>　射程 <b>2</b></p>
+            <p class="skill"><b>直線番長</b>防御を無視し、攻撃+5。（再使用まで3手番）</p>
+            <p class="pers">純粋無垢で一直線。結衣とは張り合うライバル。</p>
+          </li>
+          <li class="oshi-card oshi-starter" data-group="starter" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/yui.jpg" alt="結衣。猫の女の子" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/yui-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 角">角</span>
+            <span class="unlock">最初から</span>
+            <h3>結衣</h3>
+            <p class="costume">猫の女の子／角型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.458"></span><b>33</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.538"></span><b>7</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.429"></span><b>3</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.778"></span><b>7</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>2</b></p>
+            <p class="skill"><b>斜めバリア</b>自分か距離2以内の仲間を2回復し、この階の間 防御+2（重ねがけ不可）。（再使用まで3手番）</p>
+            <p class="pers">気分屋で誇り高い。蓮にはつい対抗心が出る。</p>
+          </li>
+          <li class="oshi-card oshi-starter" data-group="starter" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/mio.jpg" alt="美桜。鳥の女の子" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/mio-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 銀">銀</span>
+            <span class="unlock">最初から</span>
+            <h3>美桜</h3>
+            <p class="costume">鳥の女の子／銀型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.528"></span><b>38</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.615"></span><b>8</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.571"></span><b>4</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.667"></span><b>6</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>1</b></p>
+            <p class="skill"><b>かばう宣言</b>自分か距離1以内の仲間を4回復し、この階の間 防御+4（重ねがけ不可）。（再使用まで3手番）</p>
+            <p class="pers">自由で快活な関西弁。空気を変えるのが得意。</p>
+          </li>
+          <li class="oshi-card oshi-starter" data-group="starter" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/honoka.jpg" alt="歩太。虫の男の子" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/honoka-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 歩">歩</span>
+            <span class="unlock">最初から</span>
+            <h3>歩太</h3>
+            <p class="costume">虫の男の子／歩型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.472"></span><b>34</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.385"></span><b>5</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.286"></span><b>2</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.556"></span><b>5</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>1</b></p>
+            <p class="skill"><b>応援シャワー</b>最も傷ついた仲間を7＋攻撃の半分 回復。（再使用まで3手番）</p>
+            <p class="pers">気弱で慎重。怖くても仲間のためなら一歩進む。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/doma.jpg" alt="土真。モグラの潜行役" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/doma-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 潜">潜</span>
+            <span class="unlock">救出で解放</span>
+            <h3>土真</h3>
+            <p class="costume">モグラの潜行役／桂型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.542"></span><b>39</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.462"></span><b>6</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.714"></span><b>5</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.667"></span><b>6</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>1</b></p>
+            <p class="skill"><b>もぐり道</b>攻撃+4で攻撃し、相手の攻撃と速度を1下げる。（再使用まで3手番）</p>
+            <p class="pers">物静かで地下道のように考えが深い。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/gara.jpg" alt="牙羅。ワニの迎撃役" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/gara-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 待">待</span>
+            <span class="unlock">救出で解放</span>
+            <h3>牙羅</h3>
+            <p class="costume">ワニの迎撃役／銀型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.639"></span><b>46</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.615"></span><b>8</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.714"></span><b>5</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.444"></span><b>4</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>1</b>　射程 <b>1</b></p>
+            <p class="skill"><b>デスロール待機</b>攻撃+7の強襲。（再使用まで3手番）</p>
+            <p class="pers">寡黙で忍耐強く、一撃を待ち続ける。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/haina.jpg" alt="灰那。ハイエナの狩人" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/haina-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 狩">狩</span>
+            <span class="unlock">救出で解放</span>
+            <h3>灰那</h3>
+            <p class="costume">ハイエナの狩人／飛型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.500"></span><b>36</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.615"></span><b>8</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.286"></span><b>2</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.889"></span><b>8</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>3</b>　射程 <b>1</b></p>
+            <p class="skill"><b>いただきスカベンジ</b>攻撃+5の強襲。（再使用まで3手番）</p>
+            <p class="pers">機を見るのが早い現実主義者。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/haku.jpg" alt="羽久。フクロウの策士" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/haku-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 知">知</span>
+            <span class="unlock">救出で解放</span>
+            <h3>羽久</h3>
+            <p class="costume">フクロウの策士／角型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.458"></span><b>33</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.462"></span><b>6</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.429"></span><b>3</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.667"></span><b>6</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>2</b></p>
+            <p class="skill"><b>夜目の解析</b>攻撃+4で攻撃し、相手の攻撃と速度を1下げる。（再使用まで2手番）</p>
+            <p class="pers">夜ほど頭が冴える分析家。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/ibuki.jpg" alt="伊吹。猪の男の子" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/ibuki-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 香">香</span>
+            <span class="unlock">救出で解放</span>
+            <h3>伊吹</h3>
+            <p class="costume">猪の男の子／香型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.556"></span><b>40</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.615"></span><b>8</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.286"></span><b>2</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.778"></span><b>7</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>3</b>　射程 <b>2</b></p>
+            <p class="skill"><b>一直線ヒート</b>攻撃+6の強襲。（再使用まで3手番）</p>
+            <p class="pers">情熱一直線。止まることを敗北だと思っている。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/kabano.jpg" alt="河馬乃。カバの盾役" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/kabano-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 盾">盾</span>
+            <span class="unlock">救出で解放</span>
+            <h3>河馬乃</h3>
+            <p class="costume">カバの盾役／銀型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.694"></span><b>50</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.462"></span><b>6</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:1.000"></span><b>7</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.333"></span><b>3</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>1</b>　射程 <b>1</b></p>
+            <p class="skill"><b>どっしり沼守り</b>自分か距離1以内の仲間を4回復し、この階の間 防御+4（重ねがけ不可）。（再使用まで3手番）</p>
+            <p class="pers">おおらかで動じない。仲間の前に立つ。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/kaeru.jpg" alt="蛙瑠。カエルの女の子" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/kaeru-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 桂">桂</span>
+            <span class="unlock">救出で解放</span>
+            <h3>蛙瑠</h3>
+            <p class="costume">カエルの女の子／桂型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.486"></span><b>35</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.538"></span><b>7</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.286"></span><b>2</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:1.000"></span><b>9</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>1</b></p>
+            <p class="skill"><b>けろジャンプ</b>攻撃+4で攻撃し、相手の攻撃と速度を1下げる。（再使用まで3手番）</p>
+            <p class="pers">予測不能な変人。常識より面白さを優先する。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/kirara.jpg" alt="雲母。クラゲの癒し手" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/kirara-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 癒">癒</span>
+            <span class="unlock">救出で解放</span>
+            <h3>雲母</h3>
+            <p class="costume">クラゲの癒し手／援型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.472"></span><b>34</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.308"></span><b>4</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.571"></span><b>4</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.667"></span><b>6</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>2</b></p>
+            <p class="skill"><b>ぷかぷかヒール</b>最も傷ついた仲間を11＋攻撃の半分 回復。（再使用まで3手番）</p>
+            <p class="pers">ふわりと優しく、傷ついた空気まで包む。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/koharu.jpg" alt="狐春。キツネの変化役" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/koharu-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 化">化</span>
+            <span class="unlock">救出で解放</span>
+            <h3>狐春</h3>
+            <p class="costume">キツネの変化役／援型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.472"></span><b>34</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.462"></span><b>6</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.429"></span><b>3</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.889"></span><b>8</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>3</b>　射程 <b>1</b></p>
+            <p class="skill"><b>こんこん入れ替え</b>攻撃+5で攻撃し、相手の攻撃と速度を1下げる。（再使用まで3手番）</p>
+            <p class="pers">悪戯好きで戦場の位置関係を操る。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/kouga.jpg" alt="鮫牙。サメの強襲役" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/kouga-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 攻">攻</span>
+            <span class="unlock">救出で解放</span>
+            <h3>鮫牙</h3>
+            <p class="costume">サメの強襲役／香型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.514"></span><b>37</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.692"></span><b>9</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.286"></span><b>2</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.889"></span><b>8</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>3</b>　射程 <b>1</b></p>
+            <p class="skill"><b>ブラッドバイト</b>防御を無視し、攻撃+6。（再使用まで3手番）</p>
+            <p class="pers">獲物を逃さない鋭い勝負師。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/kumato.jpg" alt="熊斗。クマの守護役" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/kumato-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 剛">剛</span>
+            <span class="unlock">救出で解放</span>
+            <h3>熊斗</h3>
+            <p class="costume">クマの守護役／銀型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.722"></span><b>52</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.769"></span><b>10</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.571"></span><b>4</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.333"></span><b>3</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>1</b>　射程 <b>1</b></p>
+            <p class="skill"><b>ベアハグガード</b>自分か距離1以内の仲間を4回復し、この階の間 防御+4（重ねがけ不可）。（再使用まで4手番）</p>
+            <p class="pers">豪快で面倒見がよい大黒柱。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/misuzu.jpg" alt="海鈴。イルカの支援役" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/misuzu-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 援">援</span>
+            <span class="unlock">救出で解放</span>
+            <h3>海鈴</h3>
+            <p class="costume">イルカの支援役／援型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.486"></span><b>35</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.385"></span><b>5</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.571"></span><b>4</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.778"></span><b>7</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>2</b></p>
+            <p class="skill"><b>ハーモニーコール</b>最も傷ついた仲間を9＋攻撃の半分 回復。（再使用まで3手番）</p>
+            <p class="pers">人懐こく、声を合わせるのが好き。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/non.jpg" alt="乃音。羊の男の子" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/non-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 歩">歩</span>
+            <span class="unlock">救出で解放</span>
+            <h3>乃音</h3>
+            <p class="costume">羊の男の子／歩型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.583"></span><b>42</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.385"></span><b>5</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.714"></span><b>5</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.444"></span><b>4</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>1</b></p>
+            <p class="skill"><b>ふわふわ前進</b>自分か距離1以内の仲間を3回復し、この階の間 防御+3（重ねがけ不可）。（再使用まで3手番）</p>
+            <p class="pers">のほほんと穏やか。急がない強さを知っている。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/riko.jpg" alt="莉胡。兎の女の子" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/riko-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 桂">桂</span>
+            <span class="unlock">救出で解放</span>
+            <h3>莉胡</h3>
+            <p class="costume">兎の女の子／桂型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.472"></span><b>34</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.462"></span><b>6</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.429"></span><b>3</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:1.000"></span><b>9</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>1</b></p>
+            <p class="skill"><b>ぴょんステップ</b>攻撃+5の強襲。（再使用まで2手番）</p>
+            <p class="pers">可愛いものが大好き。跳ねるほど調子が上がる。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/sachi.jpg" alt="叉千。シャチの隊長" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/sachi-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 隊">隊</span>
+            <span class="unlock">救出で解放</span>
+            <h3>叉千</h3>
+            <p class="costume">シャチの隊長／王型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.583"></span><b>42</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.615"></span><b>8</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.571"></span><b>4</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.667"></span><b>6</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>1</b></p>
+            <p class="skill"><b>オルカフォーメーション</b>自分か距離1以内の仲間を3回復し、この階の間 防御+3（重ねがけ不可）。（再使用まで3手番）</p>
+            <p class="pers">冷静な指揮官。群れの生存を最優先する。</p>
+          </li>
+          <li class="oshi-card oshi-rescue" data-group="rescue" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/sara.jpg" alt="砂羅。サソリの毒使い" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/sara-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 毒">毒</span>
+            <span class="unlock">救出で解放</span>
+            <h3>砂羅</h3>
+            <p class="costume">サソリの毒使い／角型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.472"></span><b>34</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.538"></span><b>7</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.286"></span><b>2</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.778"></span><b>7</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>2</b></p>
+            <p class="skill"><b>しっぽの一刺し</b>攻撃+5で攻撃し、相手の攻撃と速度を1下げる。（再使用まで3手番）</p>
+            <p class="pers">辛辣だが観察眼が鋭い。</p>
+          </li>
+          <li class="oshi-card oshi-boss" data-group="boss" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/shade1.jpg" alt="豹妬レイラ。豹の女性幹部" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/shade1-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 嫉">嫉</span>
+            <span class="unlock">撃破で解放</span>
+            <h3>豹妬レイラ</h3>
+            <p class="costume">豹の女性幹部／援型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.625"></span><b>45</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.769"></span><b>10</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.429"></span><b>3</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:1.000"></span><b>9</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>3</b>　射程 <b>2</b></p>
+            <p class="skill"><b>空気悪くする</b>攻撃+7で攻撃し、相手の攻撃と速度を1下げる。（再使用まで3手番）</p>
+            <p class="pers">華やかな嫉妬を力に変える黒金会の策士。</p>
+          </li>
+          <li class="oshi-card oshi-boss" data-group="boss" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/shade2.jpg" alt="銀狼シオン。狼の男性幹部" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/shade2-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 銀">銀</span>
+            <span class="unlock">撃破で解放</span>
+            <h3>銀狼シオン</h3>
+            <p class="costume">狼の男性幹部／銀型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.722"></span><b>52</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.692"></span><b>9</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.857"></span><b>6</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.778"></span><b>7</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>1</b></p>
+            <p class="skill"><b>沈黙の圧</b>攻撃+6で攻撃し、相手の攻撃と速度を1下げる。（再使用まで3手番）</p>
+            <p class="pers">沈黙と規律を重んじる黒金会の処刑人。</p>
+          </li>
+          <li class="oshi-card oshi-boss" data-group="boss" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/shade3.jpg" alt="鹿角ノア。鹿の女性幹部" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/shade3-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 角">角</span>
+            <span class="unlock">撃破で解放</span>
+            <h3>鹿角ノア</h3>
+            <p class="costume">鹿の女性幹部／角型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:0.611"></span><b>44</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:0.846"></span><b>11</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:0.429"></span><b>3</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.889"></span><b>8</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>3</b>　射程 <b>3</b></p>
+            <p class="skill"><b>宿題追加</b>防御を無視し、攻撃+7。（再使用まで3手番）</p>
+            <p class="pers">冷徹な知性で盤面を支配する黒金会の参謀。</p>
+          </li>
+          <li class="oshi-card oshi-boss" data-group="boss" tabindex="0">
+            <figure class="oshi-face"><img src="assets/chars/king.jpg" alt="黒獅子王。ライオンの男性首領" width="360" height="360" loading="lazy" /><img class="face-happy" src="assets/chars/king-happy.jpg" alt="" width="360" height="360" loading="lazy" /></figure>
+            <span class="piece" aria-label="駒 王">王</span>
+            <span class="unlock">撃破で解放・10階の王</span>
+            <h3>黒獅子王</h3>
+            <p class="costume">ライオンの男性首領／王型</p>
+            <dl class="stats"><div><dt>HP</dt><dd><span class="bar" style="--v:1.000"></span><b>72</b></dd></div><div><dt>攻</dt><dd><span class="bar" style="--v:1.000"></span><b>13</b></dd></div><div><dt>防</dt><dd><span class="bar" style="--v:1.000"></span><b>7</b></dd></div><div><dt>速</dt><dd><span class="bar" style="--v:0.778"></span><b>7</b></dd></div></dl>
+            <p class="mini-stats">移動 <b>2</b>　射程 <b>2</b></p>
+            <p class="skill"><b>校則ビーム</b>攻撃+9の強襲。（再使用まで3手番）</p>
+            <p class="pers">黒金会を率いる絶対王。敗北すら勧誘に変える。</p>
+          </li>
+<!--OSHI_CARDS:end-->
+        </ul>
       </section>
 
-      <section class="section alt" aria-labelledby="chara-title">
-        <h2 id="chara-title">最初に選べる推し駒</h2>
-        <div class="chara-grid">
-          <article class="chara"><img src="assets/ren.jpg" alt="蓮。犬のコスプレの男の子" width="420" height="420" loading="lazy" /><h3>蓮 <span>飛</span></h3><p>純粋無垢で一直線。縦横に長く走り、防御を無視する一撃を持つ。</p></article>
-          <article class="chara"><img src="assets/yui.jpg" alt="結衣。猫のコスプレの女の子" width="420" height="420" loading="lazy" /><h3>結衣 <span>角</span></h3><p>気分屋で誇り高い。斜めの射線から仲間を守る。</p></article>
-          <article class="chara"><img src="assets/mio.jpg" alt="美桜。鳥のコスプレの女の子" width="420" height="420" loading="lazy" /><h3>美桜 <span>銀</span></h3><p>自由な関西弁。前に立って仲間をかばう守り役。</p></article>
-          <article class="chara"><img src="assets/honoka.jpg" alt="歩太。虫のコスプレの男の子" width="420" height="420" loading="lazy" /><h3>歩太 <span>歩</span></h3><p>気弱で慎重。一歩ずつ進み、仲間を応援で癒やす。</p></article>
-        </div>
-        <p class="more">救出や幹部の撃破で、主人公にできる推し駒は全24人まで増えていく。</p>
-        <div class="roster" aria-label="解放できる推し駒の一部">
-          <img src="assets/kaeru.jpg" alt="蛙瑠" width="220" height="220" loading="lazy" />
-          <img src="assets/misuzu.jpg" alt="海鈴" width="220" height="220" loading="lazy" />
-          <img src="assets/kouga.jpg" alt="鮫牙" width="220" height="220" loading="lazy" />
-          <img src="assets/kumato.jpg" alt="熊斗" width="220" height="220" loading="lazy" />
-          <img src="assets/koharu.jpg" alt="狐春" width="220" height="220" loading="lazy" />
-          <img src="assets/sara.jpg" alt="砂羅" width="220" height="220" loading="lazy" />
-          <img src="assets/shade1.jpg" alt="豹妬レイラ" width="220" height="220" loading="lazy" />
-        </div>
+      <!-- ⑥ 駒の動き -->
+      <section class="sec sec-moves" id="moves">
+        <header class="sec-head">
+          <p class="sec-no">05</p>
+          <h2>駒の動き</h2>
+          <p class="sec-tag">将棋風。でもHP制のターンバトル。</p>
+        </header>
+        <p class="moves-legend"><span class="lg lg-me">駒</span><span class="lg lg-move">移動できる</span><span class="lg lg-atk">攻撃が届く</span><span class="lg lg-both">両方</span>（図はイメージ。移動力・射程はキャラごとに違います。上が前）</p>
+<!--MOVE_BOARDS:start-->
+        <ul class="moves">
+          <li class="move-card">
+            <div class="mini-board" role="img" aria-label="歩型の移動と攻撃の範囲"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="mv"></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i></i><i></i><i class="at"></i><i class="me">歩</i><i class="at"></i><i></i><i></i><i></i><i></i><i></i><i class="at"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <h3>歩型<small>図は歩太（移動2・射程1）</small></h3>
+            <p><b class="t-teal">移動</b>前へまっすぐ（移動力まで）</p>
+            <p><b class="t-red">攻撃</b>射程以内（上下左右の距離）</p>
+            <p class="move-members">歩太・乃音</p>
+          </li>
+          <li class="move-card">
+            <div class="mini-board" role="img" aria-label="飛型の移動と攻撃の範囲"><i></i><i></i><i></i><i class="mv"></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i class="mv"></i><i class="both"></i><i class="both"></i><i class="me">飛</i><i class="both"></i><i class="both"></i><i class="mv"></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="mv"></i><i></i><i></i><i></i></div>
+            <h3>飛型<small>図は蓮（移動3・射程2）</small></h3>
+            <p><b class="t-teal">移動</b>縦横にまっすぐ（移動力まで）</p>
+            <p><b class="t-red">攻撃</b>縦横の直線（射程まで）</p>
+            <p class="move-members">蓮・灰那</p>
+          </li>
+          <li class="move-card">
+            <div class="mini-board" role="img" aria-label="角型の移動と攻撃の範囲"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i class="both"></i><i class="at"></i><i class="both"></i><i></i><i></i><i></i><i></i><i class="at"></i><i class="me">角</i><i class="at"></i><i></i><i></i><i></i><i></i><i class="both"></i><i class="at"></i><i class="both"></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <h3>角型<small>図は結衣（移動2・射程2）</small></h3>
+            <p><b class="t-teal">移動</b>斜めにまっすぐ（移動力まで）</p>
+            <p><b class="t-red">攻撃</b>斜めの直線（射程まで）＋上下左右の隣</p>
+            <p class="move-members">結衣・羽久・砂羅・鹿角ノア</p>
+          </li>
+          <li class="move-card">
+            <div class="mini-board" role="img" aria-label="桂型の移動と攻撃の範囲"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="both"></i><i></i><i class="both"></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i></i><i class="me">潜</i><i></i><i></i><i></i><i></i><i class="at"></i><i></i><i></i><i></i><i class="at"></i><i></i><i></i><i></i><i class="at"></i><i></i><i class="at"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <h3>桂型<small>図は土真（移動2・射程1）</small></h3>
+            <p><b class="t-teal">移動</b>前方へ桂馬跳び（4か所）</p>
+            <p><b class="t-red">攻撃</b>桂馬跳びの位置（後ろ向きも）</p>
+            <p class="move-members">土真・蛙瑠・莉胡</p>
+          </li>
+          <li class="move-card">
+            <div class="mini-board" role="img" aria-label="香型の移動と攻撃の範囲"><i></i><i></i><i></i><i class="mv"></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="me">香</i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <h3>香型<small>図は伊吹（移動3・射程2）</small></h3>
+            <p><b class="t-teal">移動</b>前へまっすぐ（移動力まで）</p>
+            <p><b class="t-red">攻撃</b>前方の直線（射程まで）</p>
+            <p class="move-members">伊吹・鮫牙</p>
+          </li>
+          <li class="move-card">
+            <div class="mini-board" role="img" aria-label="王型の移動と攻撃の範囲"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="mv"></i><i></i><i class="mv"></i><i></i><i class="mv"></i><i></i><i></i><i></i><i class="mv"></i><i class="both"></i><i class="mv"></i><i></i><i></i><i></i><i class="mv"></i><i class="both"></i><i class="me">隊</i><i class="both"></i><i class="mv"></i><i></i><i></i><i></i><i class="mv"></i><i class="both"></i><i class="mv"></i><i></i><i></i><i></i><i class="mv"></i><i></i><i class="mv"></i><i></i><i class="mv"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <h3>王型<small>図は叉千（移動2・射程1）</small></h3>
+            <p><b class="t-teal">移動</b>周囲8方向（移動力まで）</p>
+            <p><b class="t-red">攻撃</b>射程以内（上下左右の距離）</p>
+            <p class="move-members">叉千・黒獅子王</p>
+          </li>
+          <li class="move-card">
+            <div class="mini-board" role="img" aria-label="銀型の移動と攻撃の範囲"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="mv"></i><i></i><i></i><i></i><i></i><i></i><i class="mv"></i><i class="both"></i><i class="mv"></i><i></i><i></i><i></i><i class="mv"></i><i class="both"></i><i class="me">銀</i><i class="both"></i><i class="mv"></i><i></i><i></i><i></i><i class="mv"></i><i class="both"></i><i class="mv"></i><i></i><i></i><i></i><i></i><i></i><i class="mv"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <h3>銀型<small>図は美桜（移動2・射程1）</small></h3>
+            <p><b class="t-teal">移動</b>縦横に2マスまで・斜めに1マス</p>
+            <p><b class="t-red">攻撃</b>射程以内（上下左右の距離）</p>
+            <p class="move-members">美桜・牙羅・河馬乃・熊斗・銀狼シオン</p>
+          </li>
+          <li class="move-card">
+            <div class="mini-board" role="img" aria-label="援型の移動と攻撃の範囲"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="mv"></i><i></i><i class="both"></i><i></i><i class="mv"></i><i></i><i></i><i></i><i class="both"></i><i class="both"></i><i class="both"></i><i></i><i></i><i></i><i class="both"></i><i class="both"></i><i class="me">癒</i><i class="both"></i><i class="both"></i><i></i><i></i><i></i><i class="both"></i><i class="both"></i><i class="both"></i><i></i><i></i><i></i><i class="mv"></i><i></i><i class="both"></i><i></i><i class="mv"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <h3>援型<small>図は雲母（移動2・射程2）</small></h3>
+            <p><b class="t-teal">移動</b>周囲8方向（移動力まで）</p>
+            <p><b class="t-red">攻撃</b>射程以内（上下左右の距離）</p>
+            <p class="move-members">雲母・狐春・海鈴・豹妬レイラ</p>
+          </li>
+          <li class="move-card move-gold">
+            <div class="mini-board" role="img" aria-label="金（成り）の移動と攻撃の範囲"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="mv"></i><i class="both"></i><i class="mv"></i><i></i><i></i><i></i><i></i><i class="both"></i><i class="me">金</i><i class="both"></i><i></i><i></i><i></i><i></i><i></i><i class="both"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <h3>成ると金<small>歩・香・桂が盤の奥で成る（その階の間だけ）</small></h3>
+            <p><b class="t-teal">移動</b>前・斜め前・横・後ろへ1マス</p>
+            <p><b class="t-red">攻撃</b>射程以内（上下左右の距離）</p>
+            <p class="move-members">歩・香は最奥の段、桂は奥から2段以内で成る</p>
+          </li>
+        </ul>
+<!--MOVE_BOARDS:end-->
+        <p class="moves-note">正規の将棋ではありません。駒の種類は推し駒ごとに決まっていて、同じ盤面でも主人公の動きで攻め方がまるで変わります。</p>
       </section>
 
-      <section id="download" class="section" aria-labelledby="download-title">
-        <h2 id="download-title">ダウンロード（無料・試験版）</h2>
-        <div class="download">
-          <div>
-            <p class="status"><span class="badge">試験版</span> v1.0-trial.1　無料でお試しいただけます。</p>
-            <a class="button primary" href="https://github.com/donadonaa24-cyber/oshikoma/releases/download/v1.0-trial.1/OshigomaBattle-trial1-win64.zip">Windows版をダウンロード（zip・約101MB）</a>
-            <ol class="install">
-              <li>zipを好きな場所に展開（すべて展開）する</li>
-              <li>フォルダ内の <b>OshigomaBattle.exe</b> を起動する</li>
-              <li>「WindowsによってPCが保護されました」と出たら「詳細情報」→「実行」<br /><small>個人制作で署名をしていないため表示されます</small></li>
+      <!-- ⑦ 祝福 -->
+      <section class="sec sec-bless" id="blessings">
+        <header class="sec-head">
+          <p class="sec-no">06</p>
+          <h2>祝福 <span class="count-badge">全7種</span></h2>
+          <p class="sec-tag">階を越えるたび、3つから1つ。</p>
+        </header>
+<!--BLESSINGS:start-->
+        <ul class="bless">
+          <li class="bless-card bless-0"><span class="bless-seal" aria-hidden="true">大</span><h3>大命の印</h3><p>仲間全員の最大HPとHP+10</p></li>
+          <li class="bless-card bless-1"><span class="bless-seal" aria-hidden="true">鉄</span><h3>鉄壁の印</h3><p>仲間全員の防御+1</p></li>
+          <li class="bless-card bless-2"><span class="bless-seal" aria-hidden="true">猛</span><h3>猛攻の印</h3><p>仲間全員の攻撃+2</p></li>
+          <li class="bless-card bless-3"><span class="bless-seal" aria-hidden="true">再</span><h3>再起の印</h3><p>仲間全員のHPを20回復</p></li>
+          <li class="bless-card bless-0"><span class="bless-seal" aria-hidden="true">大</span><h3>大歩の印</h3><p>主人公の移動+1</p></li>
+          <li class="bless-card bless-1"><span class="bless-seal" aria-hidden="true">先</span><h3>先駆けの印</h3><p>主人公の速度+1</p></li>
+          <li class="bless-card bless-2"><span class="bless-seal" aria-hidden="true">知</span><h3>知略の印</h3><p>仲間全員のスキル再使用を1短縮</p></li>
+        </ul>
+<!--BLESSINGS:end-->
+        <p class="bless-note">大歩の印は、移動が増えても意味のない主人公のときは候補に出ません。</p>
+      </section>
+
+      <!-- ⑧ 画面 -->
+      <section class="sec sec-screens" id="screens">
+        <header class="sec-head">
+          <p class="sec-no">07</p>
+          <h2>実際の画面</h2>
+          <p class="sec-tag">ぜんぶ本物のスクショ。</p>
+        </header>
+        <ul class="screens">
+          <li><figure><img src="assets/screen-select.jpg" alt="主人公選択の画面。移動・攻撃範囲・固有スキルの説明が表示される" width="1280" height="720" loading="lazy" /><figcaption><b>選ぶ</b>主人公選択で、移動・攻撃範囲・固有スキルを確認</figcaption></figure></li>
+          <li><figure><img src="assets/screen-board.jpg" alt="盤面の画面。青緑のマスが移動先、右側に行動ボタンと冒険ログ" width="1280" height="720" loading="lazy" /><figcaption><b>戦う</b>青緑へ移動、赤い敵はクリックで攻撃</figcaption></figure></li>
+          <li><figure><img src="assets/screen-inspect.jpg" alt="敵にマウスを乗せると、能力と攻撃が届く範囲が表示される" width="1280" height="720" loading="lazy" /><figcaption><b>読む</b>敵に乗せると、能力と次に届く範囲が出る</figcaption></figure></li>
+          <li><figure><img src="assets/screen-blessing.jpg" alt="階層突破後の祝福選択画面" width="1280" height="720" loading="lazy" /><figcaption><b>盛る</b>突破後は祝福を3つから1つ</figcaption></figure></li>
+        </ul>
+      </section>
+
+      <!-- ⑨ ダウンロード -->
+      <section class="sec sec-dl" id="download">
+        <div class="dl">
+          <div class="dl-main">
+            <p class="dl-badge">FREE TRIAL</p>
+            <h2>今すぐ無料で遊ぶ</h2>
+            <p class="dl-ver">試験版 v1.0-trial.1 ／ Windows 10・11（64bit）</p>
+            <a class="btn btn-main btn-xl" href="https://github.com/donadonaa24-cyber/oshikoma/releases/download/v1.0-trial.1/OshigomaBattle-trial1-win64.zip"><span class="btn-sub">zip・約101MB</span>Windows版をダウンロード</a>
+            <ol class="dl-steps">
+              <li><b>展開</b>zipを好きな場所に展開（すべて展開）</li>
+              <li><b>起動</b>フォルダ内の OshigomaBattle.exe を起動</li>
+              <li><b>警告が出たら</b>「WindowsによってPCが保護されました」→「詳細情報」→「実行」<small>個人制作で署名をしていないため表示されます</small></li>
             </ol>
-            <p class="note">感想・不具合報告は <a href="https://github.com/donadonaa24-cyber/oshikoma/issues" rel="noopener">GitHubのIssues</a> へ。<a href="https://github.com/donadonaa24-cyber/oshikoma/releases" rel="noopener">リリース一覧</a></p>
           </div>
           <dl class="spec">
             <div><dt>対応</dt><dd>Windows 10 / 11（64bit）</dd></div>
-            <div><dt>操作</dt><dd>マウス</dd></div>
+            <div><dt>操作</dt><dd>マウス（Escで対象選択を取り消し）</dd></div>
             <div><dt>1回の冒険</dt><dd>約30分を目安に調整中</dd></div>
             <div><dt>価格</dt><dd>無料（試験版）</dd></div>
-            <div><dt>セーブ</dt><dd>自動保存。途中で「中断」して再開できます</dd></div>
+            <div><dt>セーブ</dt><dd>自動保存。「中断」して再開できる</dd></div>
+            <div><dt>音</dt><dd>効果音あり（ON／OFF）</dd></div>
+            <div><dt>報告</dt><dd><a href="https://github.com/donadonaa24-cyber/oshikoma/issues">GitHubのIssues</a>／<a href="https://github.com/donadonaa24-cyber/oshikoma/releases">リリース一覧</a></dd></div>
           </dl>
         </div>
       </section>
 
-      <section class="section alt" aria-labelledby="news-title">
-        <h2 id="news-title">更新情報</h2>
+      <!-- ⑩ Q&A -->
+      <section class="sec sec-faq" id="faq">
+        <header class="sec-head">
+          <p class="sec-no">08</p>
+          <h2>よくある質問</h2>
+          <p class="sec-tag">先に答えておく。</p>
+        </header>
+        <div class="faq">
+          <details><summary>お金はかかる？</summary><p>試験版は無料です。</p></details>
+          <details><summary>スマホやMacで遊べる？</summary><p>今はWindows版（10・11、64bit）だけです。Android・iOS・ブラウザ版はありません。</p></details>
+          <details><summary>起動すると警告が出た</summary><p>個人制作で署名をしていないため「WindowsによってPCが保護されました」と出ます。「詳細情報」→「実行」で起動できます。</p></details>
+          <details><summary>途中でやめられる？</summary><p>自動保存です。「中断」でタイトルに戻り、次回「続きから」で再開できます。</p></details>
+          <details><summary>主人公が倒れたらどうなる？</summary><p>その冒険は終わりです。ただし、図鑑・最高到達階・クリア回数・解放した推し駒は残ります。</p></details>
+          <details><summary>感想や不具合はどこに送る？</summary><p><a href="https://github.com/donadonaa24-cyber/oshikoma/issues">GitHubのIssues</a>へどうぞ。</p></details>
+        </div>
+      </section>
+
+      <!-- ⑪ 更新情報 -->
+      <section class="sec sec-news" id="news">
+        <header class="sec-head">
+          <p class="sec-no">09</p>
+          <h2>更新情報</h2>
+        </header>
         <ul class="news">
-          <li><time datetime="2026-10-01">2026.10.01</time>試験版 v1.0-trial.1 を無料公開。</li>
-          <li><time datetime="2026-10-01">2026.10.01</time>開発版：敵の攻撃範囲表示、成り、敵の固有スキル、結果画面などを追加し、難易度を調整。</li>
+          <li><time datetime="2026-10-01">2026.10.01</time><span class="news-tag">サイト</span>紹介ページをリニューアル。推し駒図鑑（全24人）、駒の動き、祝福一覧を追加。</li>
+          <li><time datetime="2026-10-01">2026.10.01</time><span class="news-tag news-tag-red">配信</span>試験版 v1.0-trial.1 を無料公開。</li>
+          <li><time datetime="2026-10-01">2026.10.01</time><span class="news-tag">開発</span>敵の攻撃範囲表示、成り、敵の固有スキル、結果画面などを追加し、難易度を調整。</li>
         </ul>
       </section>
     </main>
+
+    <!-- モバイルでは常に下に出るダウンロード -->
+    <a class="dock-cta" href="#download"><span>無料試験版</span>ダウンロード</a>
 
     <footer class="footer">
       <p><a class="footer-portal" href="https://donadonaa24-cyber.github.io/aniani-asobiba/">← あにあにの遊び場へ戻る</a></p>
